@@ -19,6 +19,14 @@ Words:
 """
 
 
+def _strip_fences(text: str) -> str:
+    # claude sometimes wraps the JSON in ```json fences no matter what
+    text = text.strip()
+    if text.startswith("```"):
+        text = text.split("\n", 1)[1]
+    return text.removesuffix("```").strip()
+
+
 def generate_cards(words: str, max_cards: int) -> list[Flashcard]:
     body = {
         "model": MODEL,
@@ -37,5 +45,5 @@ def generate_cards(words: str, max_cards: int) -> list[Flashcard]:
     resp = httpx.post(API_URL, json=body, headers=headers, timeout=30.0)
     resp.raise_for_status()
     text = resp.json()["content"][0]["text"]
-    cards = json.loads(text)
+    cards = json.loads(_strip_fences(text))
     return [Flashcard(**card) for card in cards[:max_cards]]
