@@ -1,6 +1,10 @@
+from dotenv import load_dotenv
 from fastapi import FastAPI
 
-from vocabbuddy.models import Flashcard, FlashcardsOut, WordsIn
+from vocabbuddy.llm import generate_cards
+from vocabbuddy.models import FlashcardsOut, WordsIn
+
+load_dotenv()
 
 app = FastAPI(title="vocabbuddy")
 
@@ -12,10 +16,4 @@ def root() -> dict[str, str]:
 
 @app.post("/flashcards")
 def make_flashcards(payload: WordsIn) -> FlashcardsOut:
-    # canned response until the real model call goes in
-    return FlashcardsOut(
-        cards=[
-            Flashcard(front="el gato", back="the cat (Spanish)"),
-            Flashcard(front="ねこ", back="cat (Japanese)"),
-        ]
-    )
+    return FlashcardsOut(cards=generate_cards(payload.words, payload.max_cards))
