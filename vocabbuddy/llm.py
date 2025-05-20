@@ -10,9 +10,13 @@ from vocabbuddy.models import Flashcard
 API_URL = "https://api.anthropic.com/v1/messages"
 MODEL = "claude-3-opus-20240229"
 
-PROMPT = """Turn this vocab list into flashcards.
-Make up to {max_cards} cards. Reply with a JSON array of objects
-with "front" and "back" keys.
+PROMPT = """You are a language tutor. Turn the word list below into vocabulary flashcards.
+
+Rules:
+- make at most {max_cards} cards
+- each card covers exactly one word or short phrase
+- fronts are the word in the foreign language, backs are the English translation
+- reply with ONLY a JSON array of {{"front": ..., "back": ...}} objects, nothing else
 
 Words:
 {words}
@@ -30,7 +34,7 @@ def _strip_fences(text: str) -> str:
 def generate_cards(words: str, max_cards: int) -> list[Flashcard]:
     body = {
         "model": MODEL,
-        "max_tokens": 1024,
+        "max_tokens": 2048,
         "messages": [
             {"role": "user", "content": PROMPT.format(max_cards=max_cards, words=words)},
         ],
