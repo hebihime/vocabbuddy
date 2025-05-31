@@ -12,6 +12,10 @@ mostly an excuse to finally learn FastAPI properly.
 
 then poke around the docs at http://127.0.0.1:8000/docs
 
+## cli
+
+    python -m vocabbuddy.cli words.txt --max-cards 15
+
 ## todo
 
 - [x] /flashcards endpoint
