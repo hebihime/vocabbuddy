@@ -18,6 +18,8 @@ Rules:
 - fronts are the word in the foreign language, backs are the English translation
 - reply with ONLY a JSON array of {{"front": ..., "back": ...}} objects, nothing else
 
+One good example: {{"front": "la biblioteca", "back": "the library"}}
+
 Words:
 {words}
 """
@@ -50,4 +52,5 @@ def generate_cards(words: str, max_cards: int) -> list[Flashcard]:
     resp.raise_for_status()
     text = resp.json()["content"][0]["text"]
     cards = json.loads(_strip_fences(text))
+    # TODO: dedupe near-identical cards, the model repeats itself on long lists
     return [Flashcard(**card) for card in cards[:max_cards]]
