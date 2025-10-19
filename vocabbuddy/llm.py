@@ -8,7 +8,7 @@ import httpx
 from vocabbuddy.models import Flashcard
 
 API_URL = "https://api.anthropic.com/v1/messages"
-MODEL = "claude-3-opus-20240229"
+MODEL = "claude-3-5-sonnet-20240620"
 
 PROMPT = """You are a language tutor. Turn the word list below into vocabulary flashcards.
 
