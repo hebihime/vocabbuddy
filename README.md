@@ -15,10 +15,14 @@ then poke around the docs at http://127.0.0.1:8000/docs
 ## cli
 
     python -m vocabbuddy.cli words.txt --max-cards 15
+    python -m vocabbuddy.cli words.txt --out deck.md
 
-## todo
+## roadmap
 
 - [x] /flashcards endpoint
-- [x] actually call the model
-- [ ] some kind of export
-- [ ] spaced repetition? ambitious
+- [x] real model call
+- [x] cli
+- [x] markdown export
+- [ ] spaced repetition scheduling
+- [ ] dedupe similar cards
+- [ ] web ui, maybe, someday
